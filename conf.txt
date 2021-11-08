@@ -1,0 +1,7 @@
+compile:g++
+program_path:/home/alex/Prog/ParProg/mm.cpp
+save_path:/home/alex/Prog/ParProg/data3/
+tres:3
+in_time:3
+keys:-O2,-O3,-Ofast
+data_sets:1

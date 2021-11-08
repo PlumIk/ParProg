@@ -4,30 +4,58 @@ import subprocess
 
 import for_input
 
-comp = 'g++'
-path = '/home/alex/Prog/ParProg/'
-name = 'mm.cpp'
-# keys = ['-O3']
-keys = ['-O2', '-O3', '-Ofast']
-steps = 3
-for_save = '/home/alex/Prog/ParProg/data/'
+conf_name = 'conf.txt'
 
-input_data = for_input.cur_set()
+conf_file = open(conf_name, "r")
+confData = conf_file.read()
+conf_file.close()
+confData = confData.split('\n')
+confDict = dict()
+for one in confData:
+    one = one.split(':')
+    if one[0] == 'keys' or one[0] == 'data_sets':
+        one[1] = one[1].split(',')
+    confDict.update({one[0]: one[1]})
+print(confDict)
+dataSet = for_input.cur_set(confDict.setdefault('data_sets'))
+if os.path.isdir(confDict.setdefault('save_path')):
+    shutil.rmtree(confDict.setdefault('save_path'), ignore_errors=True)
+os.mkdir(confDict.setdefault('save_path'))
 
-if os.path.isdir(for_save):
-    shutil.rmtree(for_save, ignore_errors=True)
-os.mkdir(for_save)
-for one in keys:
-    if os.path.isdir(for_save + name + one):
-        shutil.rmtree(for_save + name + one, ignore_errors=True)
-    os.mkdir(for_save + name + one)
-    for two in input_data:
-        name_add = ''
+info_file = open(confDict.setdefault('save_path') + 'final.txt', "w+")
+for one in confDict.setdefault('keys'):
+    for two in dataSet:
+        subprocess.run([confDict.setdefault('compile'), confDict.setdefault('program_path'), one, '-o', 'now.out'])
+        res = list()
+        for i in range(int(confDict.setdefault('tres'))):
+            programsList = list()
+            for j in range(int(confDict.setdefault('in_time'))):
+                if type(two) is int:
+                    programsList.append(subprocess.run(['./now.out', str(two)], capture_output=True, text=True))
+                else:
+                    programsList.append(subprocess.run(['./now.out', str(two[0]), str(two[1])],
+                                                       capture_output=True, text=True))
+                for three in programsList:
+                    out_line = three.stdout
+                    out_line = out_line.split(' ')
+                    res.append([float(out_line[0]), float(out_line[1])])
+
+        ap = [0, 0]
+        for tr in res:
+            ap[0] += tr[0]
+            ap[1] += tr[1]
+        ap[0] /= int(confDict.setdefault('tres'))*int(confDict.setdefault('in_time'))
+        ap[1] /= int(confDict.setdefault('tres'))*int(confDict.setdefault('in_time'))
+        r = str(ap[0]) + ' | ' + str(ap[1]) + ' | keys:' + one + ' | in time ' + confDict.setdefault('in_time')
         if type(two) is int:
-            name_add = 'n' + str(two)
+            r += ' | input: ' + str(two)
         else:
-            name_add = 'n' + str(two[0]) + 'dn' + str(two[1])
-        os.mkdir(for_save + name + one + '/' + name_add)
+            r += ' | input: ' + 'n' + str(two[0]) + ' dn' + str(two[1])
+        r += '\n'
+        info_file.write(r)
+
+'''
+
 
 if os.path.isdir(for_save + name + '_final'):
     shutil.rmtree(for_save + name + '_final', ignore_errors=True)
@@ -84,7 +112,7 @@ for one in keys:
 os.replace(name + '_final' + '.txt', for_save + name + '_final' + '/' + name + '_final' + '.txt')
 info_file.close()
 
-'''
+
 subprocess.run(["g++", "/home/alex/Prog/ParProg/mm.cpp", "-O3"])
 result = subprocess.run("./a.out", capture_output=True, text=True)
 '''
