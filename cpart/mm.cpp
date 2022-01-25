@@ -36,32 +36,17 @@ int main(int argc, char* argv[]) {
     int bm, bn, bk;
 
     if(argc==2){
-        int tmp=atoi(argv[1]);
-        if(tmp%100==0){
-            m=tmp;
-            n=tmp;
-            k=tmp;
-            bm=100;
-            bn=100;
-            bk=100;
-        }else{
-            printf("Bad input\n");
-            return 0;
-        }
-    } else if(argc==3){
         int tmp1= atoi(argv[1]);
-        int tmp2= atoi(argv[2]);
-        if(tmp1%tmp2==0){
-            m=tmp1;
-            n=tmp1;
-            k=tmp1;
-            bm=tmp2;
-            bn=tmp2;
-            bk=tmp2;
-        }else{
-            printf("Bad input\n");
-            return 0;
-        }
+        m=1500;
+        n=1500;
+        k=1500;
+        bm=tmp1;
+        bn=tmp1;
+        bk=tmp1;
+    }else{
+        printf("Bad input\n");
+        return 0;
+
     }
     double *c = new double [m*n];
     double *a = new double [m*k];

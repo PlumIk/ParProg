@@ -1,0 +1,32 @@
+{
+    "program_path": "/home/alex/Prog/ParProg/cpart/test_only_one_par.cpp",
+    "save_path": "/home/alex/Prog/ParProg/end",
+    "compiler_name": "now.out",
+    "compiler": "-o",
+    "compilers": [
+        "g++"
+    ],
+    "keys": {
+        "g++": [
+            [
+                "-O3"
+            ]
+        ]
+    },
+    "trails": 3,
+    "at_same_time": 3,
+    "data_set_len": 1,
+    "data_set": {
+        "1": {
+            "type": 1,
+            "condition_type": 1,
+            "range": [
+                1,
+                1
+            ],
+            "conditions": [],
+            "find_type": 1,
+            "find_type_condition": 10
+        }
+    }
+}
