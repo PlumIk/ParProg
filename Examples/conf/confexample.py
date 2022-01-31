@@ -14,6 +14,8 @@ class ConfExample:
     _valid = 0
     _compiler = '-o'
     _compiler_name = 'a.out'
+    # _stream_key = ''
+    # _stream_num = ''
 
     def set_valid(self):
         self._valid = 1
@@ -82,6 +84,20 @@ class ConfExample:
         self._compiler_name = compiler_name
         return self
 
+    def get_stream_key(self) -> str:
+        return self._stream_key
+
+    """def set_stream_key(self, stream_key: str):
+        self._stream_key = stream_key
+        return self
+
+    def get_stream_num(self) -> str:
+        return str(self._stream_num)
+
+    def set_stream_num(self, stream_num: str):
+        self._stream_num = stream_num
+        return self"""
+
     def get_data_set_len(self) -> int:
         return self._data_set_len
 
@@ -103,6 +119,8 @@ class ConfExample:
         some_dict.setdefault('compiler_name', self._compiler_name)
         some_dict.setdefault('compiler', self._compiler)
         some_dict.setdefault('compilers', self._compilers)
+        # some_dict.setdefault('stream_key', self._stream_key)
+        # some_dict.setdefault('stream_num', self._stream_num)
         some_dict.setdefault('keys', self._keys)
         some_dict.setdefault('trails', self._trials)
         some_dict.setdefault('at_same_time', self._at_same_time)
@@ -120,6 +138,8 @@ class ConfExample:
         self._save_path = in_dict.get('save_path')
         self._compiler_name = in_dict.get('compiler_name')
         self._compiler = in_dict.get('compiler')
+        # self._stream_num = in_dict.get('stream_num')
+        # self._stream_key = in_dict.get('stream_key')
         self._compilers = in_dict.get('compilers')
         self._keys = in_dict.get('keys')
         self._trials = in_dict.get('trails')
@@ -141,4 +161,5 @@ class ConfExample:
         ret.set_at_same_time(self._at_same_time)
         ret.set_compiler_name(self._compiler_name)
         ret.set_compilers(self._compilers)
+        ret.set_program_path(self._program_path)
         return ret

@@ -4,6 +4,7 @@ import os
 from Examples.conf.confexample import ConfExample
 from conf.confvalidator import is_valid
 from Examples.conf.dataexample import DataExample
+from other import GlobalValues as GValues
 
 EXIT = 0
 
@@ -24,6 +25,8 @@ def start_work() -> ConfExample:
         if not is_valid(conf):
             conf.set_invalid()
             return conf
+        else:
+            conf.set_valid()
     else:
 
         answer = 'n'
@@ -368,6 +371,23 @@ def _print_compiler_command(conf: ConfExample, for_print=''):
     return
 
 
+"""def _choose_stream_command(conf: ConfExample) -> ConfExample:
+    _print_stream_command(conf, 'Now stream set command:')
+
+    print('Enter stream key and num of stream name(Example:-name_key name.some)')
+    some_string = input().split(' ')
+    conf.set_compiler(some_string[0])
+    conf.set_compiler_name(some_string[1])
+    _print_compiler_command(conf, 'Now compiler name command:')
+
+    return conf
+
+
+def _print_stream_command(conf: ConfExample, for_print=''):
+    print(for_print + conf.get_stream_key() + ' ' + conf.get_stream_num())
+    return"""
+
+
 def _choose_trails(conf: ConfExample) -> ConfExample:
     _print_trails(conf, 'Now trails is:')
 
@@ -406,7 +426,7 @@ def _print_at_same_time(conf: ConfExample, for_print=''):
 
 def work_with_per(conf: ConfExample) -> ConfExample:
     data_set = dict()
-    _print_data_rules()
+    # _print_data_rules()
     pers = 0
 
     answer = 'n'
@@ -427,28 +447,18 @@ def work_with_per(conf: ConfExample) -> ConfExample:
 
     conf.set_data_set_len(pers)
 
-    all_is_one = False
-    type_of_all = 0
     all_condition = 0
-    answer = '1'
-    while answer != 'y' and answer != 'Y' and answer != 'n' and answer != 'n' and answer != EXIT:
-        print('Will all parameters be searched according to one rule? y/n')
-        answer = input()
-    if answer == EXIT:
-        conf.set_invalid()
-        return conf
-    elif answer == 'y' or answer == 'Y':
-        all_is_one = True
-        type_of_all = _choose_find_type()
-        if DataExample().set_find_type(type_of_all).need_find_condition():
-            all_condition = _choose_find_condition()
+    all_is_one = True
+    type_of_all = _choose_find_type()
+    if DataExample().set_find_type(type_of_all).need_find_condition():
+        all_condition = _choose_find_condition()
 
     now_pers = 0
     while now_pers < pers:
 
-        print('Enter name of new parameter')
-        name = input()
-        if data_set.get(name) is None:
+        '''print('Enter name of new parameter')
+        name = input()'''
+        if data_set.get(now_pers) is None:
             answer = 'n'
             data_one = DataExample()
             while answer != 'y' and answer != 'Y':
@@ -456,10 +466,10 @@ def work_with_per(conf: ConfExample) -> ConfExample:
                     data_one = _gen_data_one(all_is_one, type_of_all, all_condition)
                 else:
                     _try_again('incorrect answer')
-                data_one.print_me('Data now is: name\"' + name + '\" ')
+                data_one.print_me('Data now is: name\"' + str(now_pers) + '\" ')
                 print('Continue? (y/n)')
                 answer = input()
-            data_set.setdefault(name, data_one)
+            data_set.setdefault(now_pers, data_one)
             now_pers += 1
 
         else:
@@ -486,8 +496,10 @@ def _gen_data_one(all_is_one=False, type_of_all=1, all_condition=1) -> DataExamp
 
     if data_one.get_condition_type() == 1:
         data_one.set_range(_choose_range())
+        """
     elif data_one.get_condition_type() == 2:
         data_one.set_conditions(_choose_complex_condition())
+        """
     else:
         _try_again()
         return _gen_data_one()
@@ -495,13 +507,13 @@ def _gen_data_one(all_is_one=False, type_of_all=1, all_condition=1) -> DataExamp
 
 
 def _choose_find_type() -> int:
-    print('What find time you want to use? 1 - all values, 2 grid search')
+    print('What find time you want to use? 1 - all values, 2 grid search, 3 - random search')
     ret = input()
     while not ret.isdigit():
         _try_again('not a number')
         ret = input()
     ret = int(ret)
-    if ret < 1 or ret > 2:
+    if ret < 1 or ret > 3:
         _try_again('incorrect type')
         return _choose_find_type()
     return ret
@@ -518,6 +530,8 @@ def _choose_find_condition() -> int:
 
 
 def _choose_type() -> int:
+
+    """
     print('What type of parameter? 1-int, 2-float,3 bool')
     ret = input()
     while not ret.isdigit():
@@ -527,10 +541,12 @@ def _choose_type() -> int:
     if ret < 1 or ret > 3:
         _try_again('incorrect type')
         return _choose_type()
-    return ret
+    """
+    return GValues.INT
 
 
 def _choose_condition_type() -> int:
+    """
     print('What condition type for parameter? 1-range, 2-complex condition')
     ret = input()
     while not ret.isdigit():
@@ -540,7 +556,8 @@ def _choose_condition_type() -> int:
     if ret < 1 or ret > 2:
         _try_again('incorrect type')
         return _choose_condition_type()
-    return ret
+        """
+    return GValues.RANGE
 
 
 def _choose_range() -> list:
@@ -581,8 +598,12 @@ def _try_again(for_print='friend'):
 
 def _print_all_data(conf: ConfExample):
     print('Now have ' + str(conf.get_data_set_len()) + ' parameters')
+    print_about = True
     for item in conf.get_data_set().items():
-        item[1].print_me('Name \"' + item[0] + '\"')
+        if print_about:
+            item[1].print_type('Find type is ')
+            print_about = False
+        item[1].print_me('Name \"' + str(item[0]) + '\"')
 
 
 def _print_data_rules():

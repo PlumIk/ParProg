@@ -14,7 +14,7 @@
         ]
     },
     "trails": 3,
-    "at_same_time": 3,
+    "at_same_time": 1,
     "data_set_len": 1,
     "data_set": {
         "1": {
@@ -22,11 +22,11 @@
             "condition_type": 1,
             "range": [
                 1,
-                1
+                1001
             ],
             "conditions": [],
-            "find_type": 1,
-            "find_type_condition": 10
+            "find_type": 3,
+            "find_type_condition": 2
         }
     }
 }

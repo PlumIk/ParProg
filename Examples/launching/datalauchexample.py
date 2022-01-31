@@ -1,8 +1,9 @@
 class DataLaunchExample:
     _compilers = list()
-    _prog_path = ''
+    _program_path = ''
     _keys = dict()
     _data_in = list()
+    _data_out = dict()
     _compiler = ''
     _compiler_name = ''
     _trails = 1
@@ -48,4 +49,29 @@ class DataLaunchExample:
 
     def set_compiler_name(self, compiler_name: str):
         self._compiler_name = compiler_name
+        return self
+
+    def get_program_path(self) -> str:
+        return self._program_path
+
+    def set_program_path(self, program_path: str):
+        self._program_path = program_path
+        return self
+
+    def get_data_in(self) -> list:
+        return self._data_in
+
+    def set_data_in(self, data: list):
+        self._data_in = data
+        return self
+
+    def update_data_out(self, data):
+        self._data_out.update(data)
+        return self
+
+    def get_data_out(self) -> dict:
+        return self._data_out
+
+    def set_data_out(self, data: dict):
+        self._data_out = data
         return self

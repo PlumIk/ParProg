@@ -60,7 +60,7 @@ class DataExample:
 
         if self._type == GValues.INT:
             for_print += ' int'
-        elif self._type == GValues.FLOAT:
+        '''elif self._type == GValues.FLOAT:
             for_print += ' float'
         elif self._type == GValues.DOUBLE:
             for_print += ' double'
@@ -71,17 +71,32 @@ class DataExample:
             for_print += ' all values'
         elif self._find_type == GValues.GRID_VALUES:
             for_print += ' grid search with step ' + str(self._find_type_condition)
+        elif self._find_type == GValues.RANDOM_VALUES:
+            for_print += ' random search with ' + str(self._find_type_condition) + ' values'
+        '''
 
         if self._condition_type == GValues.RANGE:
             for_print += ' in range [' + str(self._range[0]) + ', ' + str(self._range[1]) + ']'
-        elif self._condition_type == GValues.COMPLEX_CONDITION:
+
+        '''elif self._condition_type == GValues.COMPLEX_CONDITION:
             for_print += ' with conditions:\n'
             for one in self._conditions:
                 for_print += '\t' + one + '\n'
-            for_print = for_print[:len(for_print) - 1]
+            for_print = for_print[:len(for_print) - 1]'''
 
         print(for_print)
         return self
+
+    def print_type(self, for_print):
+        if self._find_type == GValues.ALL_VALUES:
+            for_print += ' all values'
+        elif self._find_type == GValues.GRID_VALUES:
+            for_print += ' grid search with step ' + str(self._find_type_condition)
+        elif self._find_type == GValues.RANDOM_VALUES:
+            for_print += ' random search '
+
+        print(for_print)
+
 
     def code_me(self) -> dict:
         some_dict = dict()
