@@ -28,3 +28,12 @@ def print_data_out(data_out: dict):
             print('|time:', end='')
             print(one_data_set[2])
         print('')
+
+
+def pars_out(data: str) -> list:
+    some_list = data.split('\n')
+    ret = list()
+    if some_list[0].lower() != 'bad input':
+        ret.append(some_list[0].lower().split(':')[1])
+
+    return ret

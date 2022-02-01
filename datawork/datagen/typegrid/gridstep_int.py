@@ -5,6 +5,9 @@ from datawork.datagen.intercommfun import data_swapper
 class GridStepInt(DataGennerInterface):
     _step = 10
 
+    def __init__(self):
+        super(GridStepInt, self).__init__()
+
     def add_par(self, pars: list):
 
         if pars is not None:

@@ -9,6 +9,9 @@ class RandomSearchInt(DataGennerInterface):
     _values = 1
     _use_spec = 0
 
+    def __init__(self):
+        super(RandomSearchInt, self).__init__()
+
     def add_par(self, pars: list):
 
         if pars is not None:

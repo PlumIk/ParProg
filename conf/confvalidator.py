@@ -5,11 +5,11 @@ import other.GlobalFunction as GFunction
 def is_valid(conf: ConfExample) -> bool:
     some_dict = conf.code_me()
 
-    if len(some_dict) != 10 or some_dict.get('program_path') is None or some_dict.get('save_path') is None or \
-            some_dict.get('program_path') is None or some_dict.get('compiler_name') is None or \
-            some_dict.get('compiler') is None or some_dict.get('compilers') is None or \
-            some_dict.get('keys') is None or some_dict.get('trails') is None or some_dict.get('at_same_time') is None \
-            or some_dict.get('data_set_len') is None or some_dict.get('data_set') is None:
+    if len(some_dict) != 9 or some_dict.get('program_path') is None or some_dict.get('save_path') is None or \
+            some_dict.get('compilers') is None or some_dict.get('keys') is None or \
+            some_dict.get('initial_key') is None or \
+            some_dict.get('trails') is None or some_dict.get('at_same_time') is None or \
+            some_dict.get('data_set_len') is None or some_dict.get('data_set') is None:
         GFunction.set_red_text('Error:', end='')
         GFunction.set_white_text('config does not match template', end='\n')
         return False

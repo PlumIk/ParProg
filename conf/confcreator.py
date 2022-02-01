@@ -88,12 +88,12 @@ def start_work() -> ConfExample:
         answer = 'n'
         while answer != 'y' and answer != 'Y' and answer != EXIT:
             if answer == 'n' or answer == 'N':
-                conf = _choose_compiler_command(conf)
+                conf = _choose_initial_key(conf)
             elif answer == '9':
                 show_all(conf)
             elif answer == '8':
-                _print_compiler_command(conf, 'Compiler name command now:')
-            print('Continue? (y/n, 0 - exit, 9 - show all, 8 - show compiler name command)')
+                _print_initial_key(conf, 'Keys now:')
+            print('Continue? (y/n, 0 - exit, 9 - show all, 8 - show only key)')
             answer = input()
         if answer == EXIT:
             conf.set_invalid()
@@ -132,102 +132,12 @@ def start_work() -> ConfExample:
     print('\nData now:')
     show_all(conf)
 
-    print('Do you want correct this(y/n)')
-    answer = input()
-    while answer.lower() == 'y':
-        conf = _correct_configure(conf)
-
-        print('\nData now:')
-        show_all(conf)
-        print('Do you want correct this(y/n)')
-        answer = input()
-
     print('Save it?(y/n)')
     answer = input()
     if answer.lower() == 'y':
         _save_conf(conf)
 
-    return conf
-
-
-def _correct_configure(conf: ConfExample) -> ConfExample:
-    show_all(conf)
-    some_dict = conf.code_me()
-    print(some_dict)
-    print('What you want to correct?')
-    value = 1
-    print('0)not correct')
-    for key in some_dict:
-        some_list = key.split('_')
-        for_print = ''
-        for one in some_list:
-            for_print += one + ' '
-        print(str(value) + ')' + for_print)
-        value += 1
-    value = input()
-    while not str(value).isdigit():
-        _try_again('not a number')
-        value = input()
-    value = int(value)
-
-    if value == 0:
-        return conf
-    elif value == 1:
-        conf = _choose_program_path(conf)
-    elif value == 2:
-        conf = _choose_save_path(conf)
-    elif value == 3 or value == 4:
-        conf = _choose_compiler_command(conf)
-    elif value == 5:
-        conf = _choose_compilers(conf)
-        conf = _choose_keys(conf)
-    elif value == 6:
-        conf = _choose_keys(conf)
-    elif value == 7:
-        conf = _choose_trails(conf)
-    elif value == 8:
-        conf = _choose_at_same_time(conf)
-    elif value == 9:
-        conf = _correct_data(conf, some_dict.get('data_set'))
-    else:
-        _try_again('not in right range')
-        conf = _correct_configure(conf)
-
-    return conf
-
-
-def _correct_data(conf: ConfExample, some_dict: dict) -> ConfExample:
-    value = 1
-    some_list = list()
-    for key in some_dict:
-        print(str(value) + ')' + key)
-        value += 1
-        some_list.append(key)
-    print('0)not correct')
-    value = input()
-    while not str(value).isdigit():
-        _try_again('not a number')
-        value = input()
-    value = int(value)
-
-    if value == 0:
-        return conf
-    elif value <= len(some_list):
-        some_dict.pop(some_list[value - 1])
-        print('Enter name of new parameter')
-        name = input()
-        while some_dict.get(name) is not None:
-            _try_again('Not unique name')
-            print('Enter name of new parameter')
-            name = input()
-
-        data_one = _gen_data_one()
-        some_dict.setdefault(name, data_one)
-        conf.set_data_set(some_dict)
-    else:
-        _try_again('not in right range')
-        conf = _correct_data(conf, some_dict)
-
+    conf.set_valid()
     return conf
 
 
@@ -354,38 +264,23 @@ def _print_keys(conf: ConfExample, for_print=''):
     return
 
 
-def _choose_compiler_command(conf: ConfExample) -> ConfExample:
-    _print_compiler_command(conf, 'Now compiler name command:')
+def _choose_initial_key(conf: ConfExample) -> ConfExample:
+    _print_initial_key(conf, 'Initial key is:')
+    print('Do you wand have initial key?(y/n)')
 
-    print('Enter compiler key and example name(Example:-name_key name.some)')
-    some_string = input().split(' ')
-    conf.set_compiler(some_string[0])
-    conf.set_compiler_name(some_string[1])
-    _print_compiler_command(conf, 'Now compiler name command:')
+    answer = input()
+    if answer.lower() == 'y':
+        print('Enter full initial key')
+        some_string = input()
+        conf.set_initial_key(some_string)
+        _print_initial_key(conf, 'Now initial key:')
 
     return conf
 
 
-def _print_compiler_command(conf: ConfExample, for_print=''):
-    print(for_print + conf.get_compiler() + ' ' + conf.get_compiler_name())
+def _print_initial_key(conf: ConfExample, for_print=''):
+    print(for_print + conf.get_initial_key())
     return
-
-
-"""def _choose_stream_command(conf: ConfExample) -> ConfExample:
-    _print_stream_command(conf, 'Now stream set command:')
-
-    print('Enter stream key and num of stream name(Example:-name_key name.some)')
-    some_string = input().split(' ')
-    conf.set_compiler(some_string[0])
-    conf.set_compiler_name(some_string[1])
-    _print_compiler_command(conf, 'Now compiler name command:')
-
-    return conf
-
-
-def _print_stream_command(conf: ConfExample, for_print=''):
-    print(for_print + conf.get_stream_key() + ' ' + conf.get_stream_num())
-    return"""
 
 
 def _choose_trails(conf: ConfExample) -> ConfExample:
@@ -426,7 +321,6 @@ def _print_at_same_time(conf: ConfExample, for_print=''):
 
 def work_with_per(conf: ConfExample) -> ConfExample:
     data_set = dict()
-    # _print_data_rules()
     pers = 0
 
     answer = 'n'
@@ -456,8 +350,6 @@ def work_with_per(conf: ConfExample) -> ConfExample:
     now_pers = 0
     while now_pers < pers:
 
-        '''print('Enter name of new parameter')
-        name = input()'''
         if data_set.get(now_pers) is None:
             answer = 'n'
             data_one = DataExample()
@@ -492,17 +384,8 @@ def _gen_data_one(all_is_one=False, type_of_all=1, all_condition=1) -> DataExamp
             data_one.set_find_condition(_choose_find_condition())
 
     data_one.set_type(_choose_type())
-    data_one.set_condition_type(_choose_condition_type())
+    data_one.set_range(_choose_range())
 
-    if data_one.get_condition_type() == 1:
-        data_one.set_range(_choose_range())
-        """
-    elif data_one.get_condition_type() == 2:
-        data_one.set_conditions(_choose_complex_condition())
-        """
-    else:
-        _try_again()
-        return _gen_data_one()
     return data_one
 
 
@@ -530,42 +413,19 @@ def _choose_find_condition() -> int:
 
 
 def _choose_type() -> int:
-
-    """
-    print('What type of parameter? 1-int, 2-float,3 bool')
-    ret = input()
-    while not ret.isdigit():
-        _try_again('not a number')
-        ret = input()
-    ret = int(ret)
-    if ret < 1 or ret > 3:
-        _try_again('incorrect type')
-        return _choose_type()
-    """
     return GValues.INT
 
 
 def _choose_condition_type() -> int:
-    """
-    print('What condition type for parameter? 1-range, 2-complex condition')
-    ret = input()
-    while not ret.isdigit():
-        _try_again('not a number')
-        ret = input()
-    ret = int(ret)
-    if ret < 1 or ret > 2:
-        _try_again('incorrect type')
-        return _choose_condition_type()
-        """
     return GValues.RANGE
 
 
 def _choose_range() -> list:
-    some_list = list('nn')
+    some_list = list()
     print('Enter minimum value')
-    some_list[0] = input()
+    some_list.append(input())
     print('Enter maximum value')
-    some_list[1] = input()
+    some_list.append(input())
     while not some_list[0].isdigit() or not some_list[1].isdigit():
         _try_again('incorrect type')
         print('Enter minimum value')
@@ -606,14 +466,6 @@ def _print_all_data(conf: ConfExample):
         item[1].print_me('Name \"' + str(item[0]) + '\"')
 
 
-def _print_data_rules():
-    print('For the program to work correctly, you must follow several rules for setting the parameters to be tested')
-    print('1)Each parameter must be given a unique name')
-    print('2)Complex conditions must follow the rules below')
-
-    print('Составить сложные правила, используй парсер и не парься')
-
-
 def show_all(conf: ConfExample):
     _print_program_path(conf, 'Program path:')
     # print(conf.get_program_path())
@@ -623,8 +475,6 @@ def show_all(conf: ConfExample):
     # print(conf.get_compilers())
     _print_keys(conf, 'Keys:\n')
     # print(conf.get_keys())
-    _print_compiler_command(conf, 'Compiler command:')
-    # print(conf.get_compiler() + ' ' + conf.get_compiler_name())
     _print_trails(conf, 'Trails:')
     # print(conf.get_trails())
     _print_at_same_time(conf, 'At same time:')

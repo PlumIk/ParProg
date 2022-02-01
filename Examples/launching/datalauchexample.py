@@ -4,10 +4,13 @@ class DataLaunchExample:
     _keys = dict()
     _data_in = list()
     _data_out = dict()
-    _compiler = ''
-    _compiler_name = ''
+    _initial_key = ''
     _trails = 1
     _at_same_time = 1
+
+    def __init__(self):
+        self._at_same_time = 1
+
 
     def get_compilers(self) -> list:
         return self._compilers
@@ -37,18 +40,11 @@ class DataLaunchExample:
         self._at_same_time = at_same_time
         return self
 
-    def get_compiler(self) -> str:
-        return self._compiler
+    def get_initial_key(self) -> str:
+        return self._initial_key
 
-    def set_compiler(self, compiler: str):
-        self._compiler = compiler
-        return self
-
-    def get_compiler_name(self) -> str:
-        return self._compiler_name
-
-    def set_compiler_name(self, compiler_name: str):
-        self._compiler_name = compiler_name
+    def set_initial_key(self, initial_key: str):
+        self._initial_key = initial_key
         return self
 
     def get_program_path(self) -> str:
@@ -75,3 +71,4 @@ class DataLaunchExample:
     def set_data_out(self, data: dict):
         self._data_out = data
         return self
+

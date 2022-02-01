@@ -20,30 +20,31 @@ def LaunchSome(data_launch: DataLaunchExample) -> DataLaunchExample:
             key = key[:len(key) - 1]
             res = list()
 
-            print(one + ' ' + data_launch.get_program_path() + ' '+key+' ' + data_launch.get_compiler() + ' ' +
-                  data_launch.get_compiler_name())
+            print(one + ' ' + data_launch.get_program_path() + ' ' + key + ' -o now.out')
 
-            subprocess.run([one, data_launch.get_program_path(), key, data_launch.get_compiler(),
-                            data_launch.get_compiler_name()])
+            subprocess.run([one, data_launch.get_program_path(), key, '-o', 'now.out'])
+
+            if data_launch.get_initial_key() == "":
+                data_launch.set_initial_key('./now.out')
+            else:
+                data_launch.set_initial_key(data_launch.get_initial_key() + ' ./now.out')
 
             for pars in commands_run:
 
-                one_command = 'subprocess.Popen([\'./\' +\'' + data_launch.get_compiler_name() + '\','
+                pars_list = list()
                 for one_par in pars:
-                    one_command += '\'' + str(one_par) + '\','
-                one_command = one_command[:len(one_command) - 1]
-                one_command += '])'
-                print(one_command)
+                    pars_list.append(one_par)
 
-                all_command = 'programs_list = list()\n'
-                for i in range(data_launch.get_at_same_time()):
-                    all_command += 'programs_list.append(' + one_command + ')\n'
-                all_command += 'for i in programs_list:\n\twhile i.poll() is None:\n\t\tpass'
-                print(all_command)
+                for _ in range(data_launch.get_trails()):
+                    program_list = list()
+                    for _ in range(data_launch.get_at_same_time()):
+                        print([data_launch.get_initial_key()] + pars_list)
+                        program_list.append(subprocess.Popen([data_launch.get_initial_key()] + pars_list,
+                                                             stdout=subprocess.PIPE,
+                                                             text=True))
 
-                for i in range(data_launch.get_trails()):
-                    time = timeit.timeit(setup='import subprocess', stmt=all_command, number=1)
-                    res.append([two, pars, time])
-
+                    for one_subproc in program_list:
+                        one_subproc.wait()
+                        res.append([two, pars, float(GFunction.pars_out(one_subproc.stdout.read())[0])])
         data_launch.update_data_out({one: res})
     return data_launch

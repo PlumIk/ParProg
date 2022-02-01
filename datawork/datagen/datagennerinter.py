@@ -1,5 +1,8 @@
 class DataGennerInterface:
 
+    def __init__(self):
+        pass
+
     def add_par(self, pars: list):
         pass
 

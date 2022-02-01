@@ -4,6 +4,9 @@ from Examples.selfsearch.datadict import DataDict
 
 class SearchInterface:
 
+    def __init__(self):
+        pass
+
     def work(self, data: DataLaunchExample) -> DataDict:
         pass
 

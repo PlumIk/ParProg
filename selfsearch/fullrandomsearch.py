@@ -8,6 +8,8 @@ from other import GlobalFunction as GFunction
 
 
 class FullRandomSearch(SearchInterface):
+    def __init__(self):
+        super(FullRandomSearch, self).__init__()
 
     def work(self, conf: ConfExample) -> DataDict:
         end = 50

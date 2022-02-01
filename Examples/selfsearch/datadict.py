@@ -1,8 +1,12 @@
+
 import sys
 
 
 class DataDict:
     _full_duct = dict()
+
+    def __init__(self):
+        self._full_duct = dict()
 
     def add_data(self, compiler: str, keys: list, in_data: iter, out_data: float):
 
@@ -57,5 +61,16 @@ class DataDict:
 
         return value
 
+    def get_dict(self):
+        return self._full_duct
+
     def print(self):
         print(self._full_duct)
+        return self
+
+    def merge_data(self, data: dict):
+        for compiler in data.items():
+            for keys in compiler[1].items():
+                for in_data in keys[1].items():
+                    for one in in_data[1]:
+                        self.add_data(compiler[0], keys[0], in_data[0], one)

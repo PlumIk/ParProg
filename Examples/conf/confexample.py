@@ -9,13 +9,14 @@ class ConfExample:
     _trials = 1
     _at_same_time = 1
     _keys = dict()
+    _initial_key = ''
     _data_set_len = 0
     _data_set = dict()
     _valid = 0
-    _compiler = '-o'
-    _compiler_name = 'a.out'
-    # _stream_key = ''
-    # _stream_num = ''
+
+    def __init__(self):
+        self._valid = 0
+
 
     def set_valid(self):
         self._valid = 1
@@ -40,6 +41,13 @@ class ConfExample:
 
     def set_keys(self, keys: dict):
         self._keys = keys
+        return self
+
+    def get_initial_key(self) -> str:
+        return self._initial_key
+
+    def set_initial_key(self, initial_key: str):
+        self._initial_key = initial_key
         return self
 
     def get_program_path(self) -> str:
@@ -70,34 +78,6 @@ class ConfExample:
         self._at_same_time = at_same_time
         return self
 
-    def get_compiler(self) -> str:
-        return self._compiler
-
-    def set_compiler(self, compiler: str):
-        self._compiler = compiler
-        return self
-
-    def get_compiler_name(self) -> str:
-        return self._compiler_name
-
-    def set_compiler_name(self, compiler_name: str):
-        self._compiler_name = compiler_name
-        return self
-
-    def get_stream_key(self) -> str:
-        return self._stream_key
-
-    """def set_stream_key(self, stream_key: str):
-        self._stream_key = stream_key
-        return self
-
-    def get_stream_num(self) -> str:
-        return str(self._stream_num)
-
-    def set_stream_num(self, stream_num: str):
-        self._stream_num = stream_num
-        return self"""
-
     def get_data_set_len(self) -> int:
         return self._data_set_len
 
@@ -116,12 +96,9 @@ class ConfExample:
         some_dict = dict()
         some_dict.setdefault('program_path', self._program_path)
         some_dict.setdefault('save_path', self._save_path)
-        some_dict.setdefault('compiler_name', self._compiler_name)
-        some_dict.setdefault('compiler', self._compiler)
         some_dict.setdefault('compilers', self._compilers)
-        # some_dict.setdefault('stream_key', self._stream_key)
-        # some_dict.setdefault('stream_num', self._stream_num)
         some_dict.setdefault('keys', self._keys)
+        some_dict.setdefault('initial_key', self._initial_key)
         some_dict.setdefault('trails', self._trials)
         some_dict.setdefault('at_same_time', self._at_same_time)
         some_dict.setdefault('data_set_len', self._data_set_len)
@@ -136,12 +113,9 @@ class ConfExample:
     def encode_me(self, in_dict: dict):
         self._program_path = in_dict.get('program_path')
         self._save_path = in_dict.get('save_path')
-        self._compiler_name = in_dict.get('compiler_name')
-        self._compiler = in_dict.get('compiler')
-        # self._stream_num = in_dict.get('stream_num')
-        # self._stream_key = in_dict.get('stream_key')
         self._compilers = in_dict.get('compilers')
         self._keys = in_dict.get('keys')
+        self._initial_key = in_dict.get('initial_key')
         self._trials = in_dict.get('trails')
         self._at_same_time = in_dict.get('at_same_time')
         self._data_set_len = in_dict.get('data_set_len')
@@ -153,13 +127,16 @@ class ConfExample:
 
         return self
 
+    def get_type(self) -> int:
+        for item in self._data_set.items():
+            return item[1].get_find_type()
+
     def gen_launch(self) -> DataLaunchExample:
         ret = DataLaunchExample()
-        ret.set_compiler(self._compiler)
         ret.set_keys(self._keys)
         ret.set_trails(self._trials)
+        ret.set_initial_key(self._initial_key)
         ret.set_at_same_time(self._at_same_time)
-        ret.set_compiler_name(self._compiler_name)
         ret.set_compilers(self._compilers)
         ret.set_program_path(self._program_path)
         return ret
