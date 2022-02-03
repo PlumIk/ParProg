@@ -30,10 +30,9 @@ def print_data_out(data_out: dict):
         print('')
 
 
-def pars_out(data: str) -> list:
+def pars_out(data: str, word: str) -> float:
     some_list = data.split('\n')
-    ret = list()
-    if some_list[0].lower() != 'bad input':
-        ret.append(some_list[0].lower().split(':')[1])
-
-    return ret
+    for one in some_list:
+        if one.split(':')[0].lower() == word:
+            return float(one.split(':')[1])
+    return None

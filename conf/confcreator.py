@@ -60,40 +60,12 @@ def start_work() -> ConfExample:
         answer = 'n'
         while answer != 'y' and answer != 'Y' and answer != EXIT:
             if answer == 'n' or answer == 'N':
-                conf = _choose_compilers(conf)
+                _choose_searching_word(conf)
             elif answer == '9':
                 show_all(conf)
             elif answer == '8':
-                _print_compiles(conf, 'Compiles now:')
-            print('Continue? (y/n, 0 - exit, 9 - show all, 8 - show only compilers)')
-            answer = input()
-        if answer == EXIT:
-            conf.set_invalid()
-            return conf
-
-        answer = 'n'
-        while answer != 'y' and answer != 'Y' and answer != EXIT:
-            if answer == 'n' or answer == 'N':
-                conf = _choose_keys(conf)
-            elif answer == '9':
-                show_all(conf)
-            elif answer == '8':
-                _print_keys(conf, 'Keys now:')
-            print('Continue? (y/n, 0 - exit, 9 - show all, 8 - show only keys)')
-            answer = input()
-        if answer == EXIT:
-            conf.set_invalid()
-            return conf
-
-        answer = 'n'
-        while answer != 'y' and answer != 'Y' and answer != EXIT:
-            if answer == 'n' or answer == 'N':
-                conf = _choose_initial_key(conf)
-            elif answer == '9':
-                show_all(conf)
-            elif answer == '8':
-                _print_initial_key(conf, 'Keys now:')
-            print('Continue? (y/n, 0 - exit, 9 - show all, 8 - show only key)')
+                _print_searching_word(conf, 'PSearching word now:')
+            print('Continue? (y/n, 0 - exit, 9 - show all, 8 - show only searching_word)')
             answer = input()
         if answer == EXIT:
             conf.set_invalid()
@@ -136,8 +108,12 @@ def start_work() -> ConfExample:
     answer = input()
     if answer.lower() == 'y':
         _save_conf(conf)
+    if not is_valid(conf):
+        conf.set_invalid()
+        return conf
+    else:
+        conf.set_valid()
 
-    conf.set_valid()
     return conf
 
 
@@ -194,92 +170,24 @@ def _choose_save_path(conf: ConfExample) -> ConfExample:
     return conf
 
 
+def _choose_searching_word(conf: ConfExample) -> ConfExample:
+    _print_searching_word(conf, 'Searching word is:')
+
+    print('Enter full searching word without spaces')
+    some_string = input()
+    conf.set_searching_word(some_string)
+    _print_searching_word(conf, 'Now searching word is:')
+
+    return conf
+
+
+def _print_searching_word(conf: ConfExample, for_print=''):
+    print(for_print + conf.get_searching_word())
+    return
+
+
 def _print_save_path(conf: ConfExample, for_print=''):
     print(for_print + conf.get_save_path())
-    return
-
-
-def _choose_compilers(conf: ConfExample) -> ConfExample:
-    _print_compiles(conf, 'Now compilers is:')
-
-    print('Enter all compilers separated by commas without spaces')
-
-    some_string = input()
-    some_list = some_string.split(',')
-    conf.set_compilers(some_list)
-    _print_compiles(conf, 'Now compilers is:')
-
-    return conf
-
-
-def _print_compiles(conf: ConfExample, for_print=''):
-    some_list = conf.get_compilers()
-    if len(some_list) > 0:
-        for i in range(len(some_list)):
-            for_print += '\"' + some_list[i] + '\"' + ','
-
-    if for_print[len(for_print) - 1] == ',':
-        for_print = for_print[:len(for_print) - 1]
-    print(for_print)
-    return
-
-
-def _choose_keys(conf: ConfExample) -> ConfExample:
-    _print_keys(conf, 'Keys now:')
-
-    print("Enter all key sets. Key sets are separated by a dot, keys in a set are separated by commas, without spaces")
-    some_dict = dict()
-
-    for comp in conf.get_compilers():
-        print('Enter a set of keys for the compiler ' + comp)
-        some_list = list()
-        some_string = input()
-        some_string = some_string.split('.')
-        for one_set in some_string:
-            some_list.append(one_set.split(','))
-        some_dict.setdefault(comp, some_list)
-
-    conf.set_keys(some_dict)
-    _print_keys(conf, 'Now keys is:\n')
-
-    return conf
-
-
-def _print_keys(conf: ConfExample, for_print=''):
-    some_dict = conf.get_keys()
-
-    for item in some_dict.items():
-        for_print += '\t' + item[0] + ':'
-        for key_set in item[1]:
-            for key in key_set:
-                for_print += '\"' + key + '\",'
-            if for_print[len(for_print) - 1] == ',':
-                for_print = for_print[:len(for_print) - 1]
-        if for_print[len(for_print) - 1] == ',':
-            for_print = for_print[:len(for_print) - 1]
-        for_print += ',\n'
-    if for_print[len(for_print) - 1] == '\n':
-        for_print = for_print[:len(for_print) - 2]
-    print(for_print)
-    return
-
-
-def _choose_initial_key(conf: ConfExample) -> ConfExample:
-    _print_initial_key(conf, 'Initial key is:')
-    print('Do you wand have initial key?(y/n)')
-
-    answer = input()
-    if answer.lower() == 'y':
-        print('Enter full initial key')
-        some_string = input()
-        conf.set_initial_key(some_string)
-        _print_initial_key(conf, 'Now initial key:')
-
-    return conf
-
-
-def _print_initial_key(conf: ConfExample, for_print=''):
-    print(for_print + conf.get_initial_key())
     return
 
 
@@ -320,7 +228,7 @@ def _print_at_same_time(conf: ConfExample, for_print=''):
 
 
 def work_with_per(conf: ConfExample) -> ConfExample:
-    data_set = dict()
+    data_set = list()
     pers = 0
 
     answer = 'n'
@@ -341,50 +249,35 @@ def work_with_per(conf: ConfExample) -> ConfExample:
 
     conf.set_data_set_len(pers)
 
-    all_condition = 0
-    all_is_one = True
-    type_of_all = _choose_find_type()
-    if DataExample().set_find_type(type_of_all).need_find_condition():
-        all_condition = _choose_find_condition()
+    conf.set_find_type(_choose_find_type())
+    if conf.need_find_condition():
+        conf.set_find_condition(_choose_find_condition())
 
     now_pers = 0
     while now_pers < pers:
-
-        if data_set.get(now_pers) is None:
-            answer = 'n'
-            data_one = DataExample()
-            while answer != 'y' and answer != 'Y':
-                if answer == 'n' or answer == 'N':
-                    data_one = _gen_data_one(all_is_one, type_of_all, all_condition)
-                else:
-                    _try_again('incorrect answer')
-                data_one.print_me('Data now is: name\"' + str(now_pers) + '\" ')
-                print('Continue? (y/n)')
-                answer = input()
-            data_set.setdefault(now_pers, data_one)
-            now_pers += 1
-
-        else:
-            _try_again('Not unique name')
-
-    _print_all_data(conf)
+        answer = 'n'
+        data_one = DataExample()
+        while answer != 'y' and answer != 'Y':
+            if answer == 'n' or answer == 'N':
+                data_one = _gen_data_one()
+            else:
+                _try_again('incorrect answer')
+            data_one.print_me()
+            print('Continue? (y/n)')
+            answer = input()
+        data_set.append(data_one)
+        now_pers += 1
     conf.set_data_set(data_set)
     return conf
 
 
-def _gen_data_one(all_is_one=False, type_of_all=1, all_condition=1) -> DataExample:
+def _gen_data_one() -> DataExample:
     data_one = DataExample()
-
-    if all_is_one:
-        data_one.set_find_type(type_of_all)
-        data_one.set_find_condition(all_condition)
-    else:
-        data_one.set_find_type(_choose_find_type())
-        if data_one.need_find_condition():
-            data_one.set_find_condition(_choose_find_condition())
-
     data_one.set_type(_choose_type())
-    data_one.set_range(_choose_range())
+    if data_one.get_type() == 1:
+        data_one.set_range(_choose_range())
+    elif data_one.get_type() == 2:
+        data_one.set_range(_choose_string())
 
     return data_one
 
@@ -413,11 +306,20 @@ def _choose_find_condition() -> int:
 
 
 def _choose_type() -> int:
-    return GValues.INT
+    answer = '0'
+    while answer != '1' and answer != '2':
+        print('Type (1 - int, 2 -string)')
+        answer = input()
+    return int(answer)
 
 
 def _choose_condition_type() -> int:
     return GValues.RANGE
+
+
+def _choose_string() -> list:
+    print("Enter all key sets. Key sets are separated by a dot, keys in a set are separated by spaces")
+    return input().split('.')
 
 
 def _choose_range() -> list:
@@ -456,29 +358,7 @@ def _try_again(for_print='friend'):
     return
 
 
-def _print_all_data(conf: ConfExample):
-    print('Now have ' + str(conf.get_data_set_len()) + ' parameters')
-    print_about = True
-    for item in conf.get_data_set().items():
-        if print_about:
-            item[1].print_type('Find type is ')
-            print_about = False
-        item[1].print_me('Name \"' + str(item[0]) + '\"')
-
-
 def show_all(conf: ConfExample):
-    _print_program_path(conf, 'Program path:')
-    # print(conf.get_program_path())
-    _print_save_path(conf, 'Save path:')
-    # print(conf.get_save_path())
-    _print_compiles(conf, 'Compilers:')
-    # print(conf.get_compilers())
-    _print_keys(conf, 'Keys:\n')
-    # print(conf.get_keys())
-    _print_trails(conf, 'Trails:')
-    # print(conf.get_trails())
-    _print_at_same_time(conf, 'At same time:')
-    # print(conf.get_at_same_time())
-    _print_all_data(conf)
+    conf.print_me()
 
     return

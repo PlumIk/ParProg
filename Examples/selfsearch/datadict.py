@@ -8,56 +8,46 @@ class DataDict:
     def __init__(self):
         self._full_duct = dict()
 
-    def add_data(self, compiler: str, keys: list, in_data: iter, out_data: float):
+    def add_data(self, pars: list, out_data: float):
 
-        if self._full_duct.get(compiler) is None:
-            self._full_duct[compiler] = dict()
-            self._full_duct[compiler][tuple(keys)] = dict()
-            self._full_duct[compiler][tuple(keys)][tuple(in_data)] = [out_data]
-        elif self._full_duct[compiler].get(tuple(keys)) is None:
-            self._full_duct[compiler][tuple(keys)] = dict()
-            self._full_duct[compiler][tuple(keys)][tuple(in_data)] = [out_data]
-        elif self._full_duct[compiler][tuple(keys)].get(tuple(in_data)) is None:
-            self._full_duct[compiler][tuple(keys)][tuple(in_data)] = [out_data]
+        if self._full_duct.get(tuple(pars)) is None:
+            self._full_duct[tuple(pars)] = [out_data]
         else:
-            self._full_duct[compiler][tuple(keys)][tuple(in_data)] += [out_data]
+            self._full_duct[tuple(pars)] += [out_data]
         return self
 
     def add_data_from_dict(self, data_out: dict):
         for item in data_out.items():
-            for one_data_set in item[1]:
-                self.add_data(item[0], one_data_set[0], one_data_set[1], one_data_set[2])
+            for one in item[1]:
+                self.add_data(item[0], one)
+        return self
 
+    def add_data_from_list(self, data_out: list):
+        for one in data_out:
+            self.add_data(one[0], one[1])
         return self
 
     def get_better(self) -> list:
-        ret = [-1, -1, -1, -1]
+        ret = [-1, -1]
         data = sys.maxsize
 
-        for item1 in self._full_duct.items():
-            for item2 in item1[1].items():
-                for item3 in item2[1].items():
-                    t_value = self.get_mid_value(item1[0], item2[0], item3[0])
-                    if data > t_value >= 0:
-                        data = t_value
-                        ret = [item1[0], item2[0], item3[0], t_value]
+        for item in self._full_duct.items():
+            t_value = self.get_mid_value(item[0])
+            if data > t_value >= 0:
+                data = t_value
+                ret = [item[0],  t_value]
 
         return ret
 
-    def get_mid_value(self, compiler: str, keys: tuple, data: tuple) -> float:
-
-        if self._full_duct.get(compiler) is None:
-            return -1
-        elif self._full_duct[compiler].get(keys) is None:
-            return -1
-        elif self._full_duct[compiler][keys].get(data) is None:
+    def get_mid_value(self, pars: tuple) -> float:
+        if self._full_duct.get(pars) is None:
             return -1
 
         value = 0
-        for one in self._full_duct[compiler][keys][data]:
+        for one in self._full_duct[pars]:
             value += one
 
-        value /= len(self._full_duct[compiler][keys][data])
+        value /= len(self._full_duct[pars])
 
         return value
 
@@ -68,9 +58,3 @@ class DataDict:
         print(self._full_duct)
         return self
 
-    def merge_data(self, data: dict):
-        for compiler in data.items():
-            for keys in compiler[1].items():
-                for in_data in keys[1].items():
-                    for one in in_data[1]:
-                        self.add_data(compiler[0], keys[0], in_data[0], one)
