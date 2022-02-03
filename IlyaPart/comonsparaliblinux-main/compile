@@ -1,0 +1,1 @@
+ /usr/local/mpich-3.3-gcc-7/bin/mpic++-7 -fopenmp -std=c++17 -O3 -o program.exe main.cpp Jacobi.cpp baseline_data.cpp CommonsParaLib.cpp DecompositionType.cpp Grid.cpp Grid1D.cpp Grid2D.cpp Grid3D.cpp ParaCommunication.cpp ParaHelper.cpp Range.cpp Range2D.cpp Reduce.cpp Waiter.cpp XYPair.cpp StartLastXY.cpp ThreadPool.h

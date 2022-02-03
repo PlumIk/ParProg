@@ -1,0 +1,67 @@
+{
+    "program_path": "run",
+    "save_path": "/home/alex/Prog/ParProg/end",
+    "searching_word": "time",
+    "find_type": 3,
+    "find_condition": 2,
+    "trails": 1,
+    "at_same_time": 1,
+    "data_set_len": 9,
+    "data_set": [
+        {
+            "type": 2,
+            "range": [
+                "mpic++"
+            ]
+        },
+        {
+            "type": 2,
+            "range": [
+                "-O3",
+                "-O2"
+            ]
+        },
+        {
+            "type": 2,
+            "range": [
+                "program.out"
+            ]
+        },
+        {
+            "type": 1,
+            "range": [
+                1,8
+            ]
+        },
+        {
+            "type": 1,
+            "range": [
+                240,240
+            ]
+        },
+        {
+            "type": 1,
+            "range": [
+                4000,4000
+            ]
+        },
+        {
+            "type": 1,
+            "range": [
+               0,0
+            ]
+        },
+        {
+            "type": 1,
+            "range": [
+                1,1
+            ]
+        },
+        {
+            "type": 1,
+            "range": [
+                0,0
+            ]
+        }
+    ]
+}

@@ -1,0 +1,1 @@
+g++ -std=c++14 -o program.exe main.cpp baseline_data.cpp CommonsParaLib.cpp DecompositionType.cpp Grid.cpp Grid1D.cpp Grid2D.cpp Grid3D.cpp ParaCommunication.cpp ParaHelper.cpp Range.cpp Range2D.cpp Reduce.cpp Waiter.cpp XYPair.cpp

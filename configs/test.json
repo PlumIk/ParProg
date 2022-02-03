@@ -1,0 +1,35 @@
+{
+    "program_path": "/home/alex/Prog/ParProg/cpart/test_only_one_par.cpp",
+    "save_path": "/home/alex/Prog/ParProg/end",
+    "searching_word": "time",
+    "find_type": 3,
+    "find_condition": 2,
+    "trails": 1,
+    "at_same_time": 1,
+    "data_set_len": 3,
+    "data_set": [
+        {
+            "type": 2,
+            "range": [
+                "g++",
+                "g--",
+                "g+-"
+            ]
+        },
+        {
+            "type": 2,
+            "range": [
+                "-O3",
+                "-O3 -Og",
+                "-Otrtwe"
+            ]
+        },
+        {
+            "type": 1,
+            "range": [
+                1,
+                10
+            ]
+        }
+    ]
+}

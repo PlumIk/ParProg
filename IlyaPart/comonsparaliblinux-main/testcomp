@@ -1,0 +1,1 @@
+/usr/local/mpich-3.3-gcc-7/bin/mpic++-7 -std=c++17 -o program.exe Grid2D.cpp 
