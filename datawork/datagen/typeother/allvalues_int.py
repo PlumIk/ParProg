@@ -1,18 +1,21 @@
-from datawork.datagen.datagennerinter import DataGennerInterface
+from Examples.conf.dataexample import DataExample
 from datawork.datagen.intercommfun import data_swapper
+import other.GlobalValues as GValues
 
 
-class AllValuesInt(DataGennerInterface):
+class AllValuesInt:
 
     def __init__(self):
-        super(AllValuesInt, self).__init__()
+        self._use_spec = 0
 
-
-    def gen_data(self, data: list) -> list:
-        data = data_swapper(data)
+    def gen_data(self, data: DataExample) -> list:
         ret = list()
 
-        for i in range(data[0], data[1]+1):
-            ret.append(i)
+        if data.get_type() == GValues.INT:
+            data = data_swapper(data.get_range())
+            for i in range(data[0], data[1] + 1):
+                ret.append(i)
+        elif data.get_type() == GValues.STR:
+            ret = data.get_range()
 
         return ret

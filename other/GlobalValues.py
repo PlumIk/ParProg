@@ -1,7 +1,8 @@
 # type of data
 INT = 1
-# FLOAT = 2
-# DOUBLE = 3
+STR = 2
+# FLOAT = 3
+# DOUBLE = 4
 
 # type of condition
 RANGE = 1
