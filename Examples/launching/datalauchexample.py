@@ -1,12 +1,12 @@
 class DataLaunchExample:
-    _program_path = ''
-    _searching_word =''
-    _data_in = list()
-    _data_out = list()
-    _trails = 1
-    _at_same_time = 1
 
     def __init__(self):
+        self._program_path = ''
+        self._searching_word = ''
+        self._data_in = list()
+        self._data_out = list()
+        self._trails = 1
+        self._at_same_time = 1
         self._at_same_time = 1
 
     def get_trails(self) -> int:

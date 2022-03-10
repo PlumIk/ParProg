@@ -13,24 +13,13 @@ class RandomSearchInt:
         self._values = 1
 
     def add_par(self, pars: list):
-
         if pars is not None:
-            if len(pars) > 1:
-                self._values = pars[1]
-                self._use_spec = pars[0]
-            elif len(pars) == 1:
+            if len(pars) == 1:
                 self._values = pars[0]
-
         return self
-
-    def special_fun(self):
-        self._values = 1
 
     def gen_data(self, data: DataExample) -> list:
         ret = list()
-
-        if self._use_spec == 1:
-            self.special_fun()
 
         if data.get_type() == GValues.INT:
             data = data_swapper(data.get_range())
@@ -45,6 +34,7 @@ class RandomSearchInt:
                 if ret.count(add) == 0:
                     ret.append(add)
                     i += 1
+
         elif data.get_type() == GValues.STR:
             if self._values > len(data.get_range()):
                 self._values = len(data.get_range()) - 1
@@ -52,7 +42,7 @@ class RandomSearchInt:
                     self._values = 1
             i = 0
             while i < self._values:
-                add = randint(0, len(data.get_range())-1)
+                add = randint(0, len(data.get_range()) - 1)
                 if ret.count(data.get_range()[add]) == 0:
                     ret.append(data.get_range()[add])
                     i += 1

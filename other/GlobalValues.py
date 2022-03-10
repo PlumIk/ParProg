@@ -12,6 +12,7 @@ RANGE = 1
 ALL_VALUES = 1
 GRID_VALUES = 2
 RANDOM_VALUES = 3
+GRID_RANDOM = 4
 
 # type of text
 RED_TEXT = "\033[31m {}"

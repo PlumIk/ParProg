@@ -3,7 +3,6 @@ import sys
 
 
 class DataDict:
-    _full_duct = dict()
 
     def __init__(self):
         self._full_duct = dict()

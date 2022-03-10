@@ -1,0 +1,3 @@
+#!/bin/bash
+$1 cpart/test_only_one_par.cpp $2 -o now.out
+./now.out $3

@@ -11,9 +11,8 @@ class GridStepInt:
     def add_par(self, pars: list):
 
         if pars is not None:
-            if (pars[0]) != -1:
+            if len(pars) == 1:
                 self._step = pars[0]
-
         return self
 
     def gen_data(self, data: DataExample) -> list:

@@ -2,10 +2,10 @@ import other.GlobalValues as GValues
 
 
 class DataExample:
-    _type = GValues.INT
-    _range = list()
 
     def __init__(self):
+        self._type = GValues.INT
+        self._range = list()
         self._find_type_condition = 1
 
     def set_type(self, typeper: int):

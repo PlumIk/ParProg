@@ -4,19 +4,19 @@ from other import GlobalValues as GValues
 
 
 class ConfExample:
-    _program_path = ' '
-    _save_path = ' '
-    _trials = 1
-    _at_same_time = 1
-    _data_set_len = 0
-    _searching_word = 'time'
-    _data_set = list()
-    _valid = 0
-    _find_type = GValues.ALL_VALUES
-    _find_type_condition = 1
+
 
     def __init__(self):
+        self._program_path = ' '
+        self._save_path = ' '
+        self._trials = 1
+        self._at_same_time = 1
+        self._data_set_len = 0
+        self._searching_word = 'time'
+        self._data_set = list()
         self._valid = 0
+        self._find_type = GValues.ALL_VALUES
+        self._find_type_condition = 1
 
     def set_valid(self):
         self._valid = 1
@@ -144,6 +144,8 @@ class ConfExample:
             print('Searching by grid with start step ', self._find_type_condition)
         elif self._find_type == GValues.RANDOM_VALUES:
             print('Searching by random search')
+        elif self._find_type == GValues.GRID_RANDOM:
+            print('Searching by gradient')
 
         print('At same time', self._at_same_time)
         print('Data set len ', self._data_set_len)

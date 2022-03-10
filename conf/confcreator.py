@@ -6,21 +6,19 @@ from conf.confvalidator import is_valid
 from Examples.conf.dataexample import DataExample
 from other import GlobalValues as GValues
 
-EXIT = 0
+EXIT = '0'
 
 
 def start_work() -> ConfExample:
     global EXIT
     conf = ConfExample()
-    answer = 1
 
-    while answer != 'y' and answer != 'Y' and answer != 'n' and answer != 'N' and answer != '0':
-        print('Load config file? (y/n, 0 - exit) ')
-        answer = input()
+    print('Load config file? (y/n, 0 - exit) ')
+    answer = input()
     if answer == EXIT:
         conf.set_invalid()
         return conf
-    elif answer == 'y' or answer == 'Y':
+    elif str(answer).lower() == 'y':
         conf = _load_conf()
         if not is_valid(conf):
             conf.set_invalid()
@@ -30,8 +28,8 @@ def start_work() -> ConfExample:
     else:
 
         answer = 'n'
-        while answer != 'y' and answer != 'Y' and answer != EXIT:
-            if answer == 'n' or answer == 'N':
+        while str(answer).lower() != 'y' and answer != EXIT:
+            if str(answer).lower() == 'n':
                 _choose_program_path(conf)
             elif answer == '9':
                 show_all(conf)
@@ -44,8 +42,8 @@ def start_work() -> ConfExample:
             return conf
 
         answer = 'n'
-        while answer != 'y' and answer != 'Y' and answer != EXIT:
-            if answer == 'n' or answer == 'N':
+        while str(answer).lower() != 'y' and answer != EXIT:
+            if str(answer).lower() == 'n':
                 _choose_save_path(conf)
             elif answer == '9':
                 show_all(conf)
@@ -58,22 +56,22 @@ def start_work() -> ConfExample:
             return conf
 
         answer = 'n'
-        while answer != 'y' and answer != 'Y' and answer != EXIT:
-            if answer == 'n' or answer == 'N':
+        while str(answer).lower() != 'y' and answer != EXIT:
+            if str(answer).lower() == 'n':
                 _choose_searching_word(conf)
             elif answer == '9':
                 show_all(conf)
             elif answer == '8':
-                _print_searching_word(conf, 'PSearching word now:')
-            print('Continue? (y/n, 0 - exit, 9 - show all, 8 - show only searching_word)')
+                _print_searching_word(conf, 'Searching word now:')
+            print('Continue? (y/n, 0 - exit, 9 - show all, 8 - show only searching word)')
             answer = input()
         if answer == EXIT:
             conf.set_invalid()
             return conf
 
         answer = 'n'
-        while answer != 'y' and answer != 'Y' and answer != EXIT:
-            if answer == 'n' or answer == 'N':
+        while str(answer).lower() != 'y' and answer != EXIT:
+            if str(answer).lower() == 'n':
                 _choose_trails(conf)
             elif answer == '9':
                 show_all(conf)
@@ -86,8 +84,8 @@ def start_work() -> ConfExample:
             return conf
 
         answer = 'n'
-        while answer != 'y' and answer != 'Y' and answer != EXIT:
-            if answer == 'n' or answer == 'N':
+        while str(answer).lower() != 'y' and answer != EXIT:
+            if str(answer).lower() == 'n':
                 _choose_at_same_time(conf)
             elif answer == '9':
                 show_all(conf)
@@ -232,8 +230,8 @@ def work_with_per(conf: ConfExample) -> ConfExample:
     pers = 0
 
     answer = 'n'
-    while answer != 'y' and answer != 'Y' and answer != EXIT:
-        if answer == 'n' or answer == 'N':
+    while str(answer).lower() != 'y' and answer != EXIT:
+        if str(answer).lower() == 'n':
             print('How many different parameters?')
             pers = input()
         if not str(pers).isdigit():
@@ -257,8 +255,8 @@ def work_with_per(conf: ConfExample) -> ConfExample:
     while now_pers < pers:
         answer = 'n'
         data_one = DataExample()
-        while answer != 'y' and answer != 'Y':
-            if answer == 'n' or answer == 'N':
+        while str(answer).lower() != 'y':
+            if str(answer).lower() == 'n':
                 data_one = _gen_data_one()
             else:
                 _try_again('incorrect answer')
@@ -283,13 +281,13 @@ def _gen_data_one() -> DataExample:
 
 
 def _choose_find_type() -> int:
-    print('What find time you want to use? 1 - all values, 2 grid search, 3 - random search')
+    print('What find type you want to use? 1 - all values, 2 grid search, 3 - random search, 4 - gradient')
     ret = input()
     while not ret.isdigit():
         _try_again('not a number')
         ret = input()
     ret = int(ret)
-    if ret < 1 or ret > 3:
+    if ret < 1 or ret > 4:
         _try_again('incorrect type')
         return _choose_find_type()
     return ret
@@ -336,20 +334,6 @@ def _choose_range() -> list:
         some_list[1] = input()
     some_list[0] = int(some_list[0])
     some_list[1] = int(some_list[1])
-    return some_list
-
-
-def _choose_complex_condition() -> list:
-    answer = 'y'
-    some_list = list()
-    while answer == 'y' or answer == 'Y':
-        print('Enter one complex condition')
-        some_list.append(input())
-        print('More condition for this parameter?(y/n)')
-        answer = input()
-        if answer != 'y' and answer != 'Y' and answer != 'n' and answer != 'N':
-            print('More condition for this parameter?(y/n)')
-            answer = input()
     return some_list
 
 
