@@ -18,6 +18,9 @@ class GradSearch:
 
         still_work = True
 
+        if conf.get_time_limit() != 0 and conf.get_time_limit() <= self._data_dict.get_time():
+            still_work = False
+
         while still_work:
 
             sub_data_dict = DataDict()
@@ -70,6 +73,8 @@ class GradSearch:
             if now_best[1] > now_p_better[1]:
                 now_best = now_p_better
             else:
+                still_work = False
+            if conf.get_time_limit() != 0 and conf.get_time_limit() <= self._data_dict.get_time():
                 still_work = False
 
         return self._data_dict

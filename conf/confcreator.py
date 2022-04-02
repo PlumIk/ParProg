@@ -86,6 +86,20 @@ def start_work() -> ConfExample:
         answer = 'n'
         while str(answer).lower() != 'y' and answer != EXIT:
             if str(answer).lower() == 'n':
+                _choose_time_limit(conf)
+            elif answer == '9':
+                show_all(conf)
+            elif answer == '8':
+                _print_time_limit(conf, 'Time limit now:')
+            print('Continue? (y/n, 0 - exit, 9 - show all, 8 - show only time limit)')
+            answer = input()
+        if answer == EXIT:
+            conf.set_invalid()
+            return conf
+
+        answer = 'n'
+        while str(answer).lower() != 'y' and answer != EXIT:
+            if str(answer).lower() == 'n':
                 _choose_at_same_time(conf)
             elif answer == '9':
                 show_all(conf)
@@ -186,6 +200,24 @@ def _print_searching_word(conf: ConfExample, for_print=''):
 
 def _print_save_path(conf: ConfExample, for_print=''):
     print(for_print + conf.get_save_path())
+    return
+
+
+def _choose_time_limit(conf: ConfExample) -> ConfExample:
+    _print_time_limit(conf, 'Now time limit is:')
+
+    some_string = 'a'
+    while not some_string.isdigit():
+        print('Enter time limit')
+        some_string = input()
+    conf.set_time_limit(int(some_string))
+    _print_time_limit(conf, 'Time limit is:')
+
+    return conf
+
+
+def _print_time_limit(conf: ConfExample, for_print=''):
+    print(for_print + str(conf.get_time_limit()))
     return
 
 

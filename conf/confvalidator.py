@@ -6,9 +6,9 @@ import other.GlobalValues as GValues
 def is_valid(conf: ConfExample) -> bool:
     some_dict = conf.code_me()
 
-    if len(some_dict) != 9 or some_dict.get('program_path') is None or some_dict.get('save_path') is None or \
+    if len(some_dict) != 10 or some_dict.get('program_path') is None or some_dict.get('save_path') is None or \
             some_dict.get('find_type') is None or some_dict.get('find_condition') is None or \
-            some_dict.get('searching_word') is None or \
+            some_dict.get('searching_word') is None or some_dict.get('time_limit') is None or\
             some_dict.get('trails') is None or some_dict.get('at_same_time') is None or \
             some_dict.get('data_set_len') is None or some_dict.get('data_set') is None:
         GFunction.set_red_text('Error:', end='')

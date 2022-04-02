@@ -5,7 +5,6 @@ from other import GlobalValues as GValues
 
 class ConfExample:
 
-
     def __init__(self):
         self._program_path = ' '
         self._save_path = ' '
@@ -17,6 +16,7 @@ class ConfExample:
         self._valid = 0
         self._find_type = GValues.ALL_VALUES
         self._find_type_condition = 1
+        self._time_limit = 100
 
     def set_valid(self):
         self._valid = 1
@@ -69,6 +69,13 @@ class ConfExample:
         self._find_type_condition = find_condition
         return self
 
+    def get_time_limit(self) -> int:
+        return self._time_limit
+
+    def set_time_limit(self, time_limit: int):
+        self._time_limit = time_limit
+        return self
+
     def get_trails(self) -> int:
         return self._trials
 
@@ -103,6 +110,7 @@ class ConfExample:
         some_dict.setdefault('save_path', self._save_path)
         some_dict.setdefault('find_type', self._find_type)
         some_dict.setdefault('find_condition', self._find_type_condition)
+        some_dict.setdefault('time_limit', self._time_limit)
         some_dict.setdefault('searching_word', self._searching_word)
         some_dict.setdefault('trails', self._trials)
         some_dict.setdefault('at_same_time', self._at_same_time)
@@ -120,6 +128,7 @@ class ConfExample:
         self._save_path = in_dict.get('save_path')
         self._trials = in_dict.get('trails')
         self._find_type = in_dict.get('find_type')
+        self._time_limit = in_dict.get('time_limit')
         self._searching_word = in_dict.get('searching_word')
         self._find_type_condition = in_dict.get('find_condition')
         self._at_same_time = in_dict.get('at_same_time')
@@ -147,6 +156,7 @@ class ConfExample:
         elif self._find_type == GValues.GRID_RANDOM:
             print('Searching by gradient')
 
+        print('Time limit ', self._time_limit)
         print('At same time', self._at_same_time)
         print('Data set len ', self._data_set_len)
 

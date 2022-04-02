@@ -23,8 +23,9 @@ class FullRandomSearch:
             data.set_data_in(data_list)
             data = LaunchSome(data)
             self._data_dict.add_data_from_list(data.get_data_out())
-
-            if now_best[0] == -1:
+            if conf.get_time_limit() != 0 and conf.get_time_limit() <= self._data_dict.get_time():
+                now_step = end
+            elif now_best[0] == -1:
                 now_best = self._data_dict.get_better()
             else:
                 now_p_better = self._data_dict.get_better()

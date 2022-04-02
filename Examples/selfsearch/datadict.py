@@ -1,4 +1,3 @@
-
 import sys
 
 
@@ -6,9 +5,10 @@ class DataDict:
 
     def __init__(self):
         self._full_duct = dict()
+        self._time = 0.0
 
     def add_data(self, pars: list, out_data: float):
-
+        self._time += out_data
         if self._full_duct.get(tuple(pars)) is None:
             self._full_duct[tuple(pars)] = [out_data]
         else:
@@ -34,7 +34,7 @@ class DataDict:
             t_value = self.get_mid_value(item[0])
             if data > t_value >= 0:
                 data = t_value
-                ret = [item[0],  t_value]
+                ret = [item[0], t_value]
 
         return ret
 
@@ -53,7 +53,9 @@ class DataDict:
     def get_dict(self):
         return self._full_duct
 
+    def get_time(self) -> float:
+        return self._time
+
     def print(self):
         print(self._full_duct)
         return self
-
