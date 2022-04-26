@@ -1,0 +1,3 @@
+#!/bin/bash
+mpic++ -pthread -o test cpart/ForD/MPI_mat.cpp
+mpirun -n $1 ./test $2 $3	

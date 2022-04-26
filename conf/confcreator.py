@@ -337,7 +337,7 @@ def _choose_find_condition() -> int:
 
 def _choose_type() -> int:
     answer = '0'
-    while answer != '1' and answer != '2':
+    while answer != '1' and answer != '2' and answer != '3':
         print('Type (1 - int, 2 -string)')
         answer = input()
     return int(answer)

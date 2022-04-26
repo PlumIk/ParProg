@@ -47,4 +47,18 @@ class RandomSearchInt:
                     ret.append(data.get_range()[add])
                     i += 1
 
+        elif data.get_type() == GValues.DOUBLE:
+            data = data_swapper(data.get_range())
+
+            if self._values > data[1] - data[0]:
+                self._values = data[1] - data[0] - 1
+                if self._values < 1:
+                    self._values = 1
+            i = 0
+            while i < self._values:
+                add = random() * (data[1] - data[0]) + data[0]
+                if ret.count(add) == 0:
+                    ret.append(add)
+                    i += 1
+
         return ret

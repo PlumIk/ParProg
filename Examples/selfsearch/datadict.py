@@ -50,6 +50,13 @@ class DataDict:
 
         return value
 
+    def get_sum(self) -> float:
+        ret = 0
+        for item in self._full_duct.items():
+            for one in self._full_duct[item[0]]:
+                ret += one
+        return ret
+
     def get_dict(self):
         return self._full_duct
 

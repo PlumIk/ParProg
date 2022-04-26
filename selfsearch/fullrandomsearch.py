@@ -20,9 +20,11 @@ class FullRandomSearch:
                 data_list.append(RandomSearchInt().add_par([1]).gen_data(one))
 
             data = conf.gen_launch()
+            print(data_list)
             data.set_data_in(data_list)
             data = LaunchSome(data)
             self._data_dict.add_data_from_list(data.get_data_out())
+            'print(now_step,now_best)'
             if conf.get_time_limit() != 0 and conf.get_time_limit() <= self._data_dict.get_time():
                 now_step = end
             elif now_best[0] == -1:

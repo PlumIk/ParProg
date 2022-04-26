@@ -44,6 +44,7 @@ class GridSearch:
             data = conf.gen_launch()
             data.set_data_in(data_list)
             data = LaunchSome(data)
+            print()
             sub_data_dict.add_data_from_list(data.get_data_out())
             self._data_dict.add_data_from_dict(sub_data_dict.get_dict())
 
@@ -52,10 +53,11 @@ class GridSearch:
                 still_work = False
             else:
                 p_step = now_step
-                now_step = int(now_step / 5)
+                now_step = int(now_step / 2)
                 if now_step < 1:
                     now_step = 1
                 now_best = sub_data_dict.get_better()
+                print(sub_data_dict.print())
                 for i in range(len(data_list)):
                     now_data = data_list[i]
                     if str(now_data[0]).isdigit():
@@ -65,13 +67,14 @@ class GridSearch:
                             new_rang[0] = int(now_data[index - 1])
                         else:
                             new_rang[0] = int(now_data[index])
-                        if index < len(now_data):
+                        if index +1 < len(now_data):
                             new_rang[1] = int(now_data[index + 1])
                         else:
                             new_rang[1] = int(now_data[index])
                         one = DataExample().set_type(GValues.INT).set_range(new_rang)
                         sub_data_list.append(GridStepInt().add_par([now_step]).gen_data(one))
                     else:
+                        print(now_data, now_best[0])
                         index = now_data.index(now_best[0][i])
 
                         new_rang = [0, 0]

@@ -1,3 +1,5 @@
+from random import random
+
 from Examples.conf.confexample import ConfExample
 from Examples.conf.dataexample import DataExample
 from Examples.selfsearch.datadict import DataDict
@@ -30,7 +32,7 @@ class GradSearch:
 
             for one in conf.get_data_set():
                 now_data = one.get_range()
-                if str(now_data[0]).isdigit():
+                if one.get_type() == GValues.INT:
                     new_rang = [0, 0]
                     if int(now_best[0][now]) > now_data[0]:
                         new_rang[0] = int(now_best[0][now]) - 1
@@ -42,7 +44,7 @@ class GradSearch:
                         new_rang[1] = int(now_best[0][now])
                     one = DataExample().set_type(GValues.INT).set_range(new_rang)
                     sub_data_list.append(AllValuesInt().gen_data(one))
-                else:
+                elif one.get_type() == GValues.STR:
                     index = now_data.index(now_best[0][now])
 
                     new_rang = [0, 0]
@@ -63,6 +65,18 @@ class GradSearch:
                     one = DataExample().set_type(GValues.STR).set_range(new_rang)
                     sub_data_list.append(AllValuesInt().gen_data(one))
                     now += 1
+                else:
+                    new_rang = [0, 0]
+                    if float(now_best[0][now]) > now_data[0]:
+                        new_rang[0] = float(now_best[0][now]) - random()
+                    else:
+                        new_rang[0] = float(now_best[0][now])
+                    if float(now_best[0][now]) < now_data[1]:
+                        new_rang[1] = float(now_best[0][now]) + random()
+                    else:
+                        new_rang[1] = float(now_best[0][now])
+                    sub_data_list.append(new_rang)
+
             data_list = sub_data_list
             data = conf.gen_launch()
             data.set_data_in(data_list)

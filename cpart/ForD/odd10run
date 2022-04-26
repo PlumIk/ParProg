@@ -1,0 +1,3 @@
+#!/bin/bash
+g++ cpart/ForD/odd10.cpp $1 -o now.out
+./now.out $2

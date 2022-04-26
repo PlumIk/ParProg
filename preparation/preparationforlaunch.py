@@ -23,6 +23,7 @@ def preparation(conf: ConfExample):
             ret = BayesSearch().work(conf)
 
         print('good is:' + str(ret.get_better()))
+        print("Sum ", ret.get_sum())
         GFunction.to_file(conf.get_save_path(), ret)
     else:
         GFunction.set_red_text('Error:')

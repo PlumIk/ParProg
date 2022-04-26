@@ -27,6 +27,8 @@ class DataExample:
             print('Int in range ', self._range)
         elif self._type == GValues.STR:
             print('String with values ', self._range)
+        elif self._type == GValues.DOUBLE:
+            print('Double in range ', self._range)
 
     def code_me(self) -> dict:
         some_dict = dict()

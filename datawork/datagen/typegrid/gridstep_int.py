@@ -23,8 +23,11 @@ class GridStepInt:
             data = data_swapper(data.get_range())
 
             i = data[0]
+
             while i <= data[1]:
                 ret.append(i)
+
+
                 i += self._step
         elif data.get_type() == GValues.STR:
             i = 0

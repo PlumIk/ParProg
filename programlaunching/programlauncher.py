@@ -17,12 +17,15 @@ def LaunchSome(data_launch: DataLaunchExample) -> DataLaunchExample:
         for _ in range(data_launch.get_trails()):
             program_list = list()
             for _ in range(data_launch.get_at_same_time()):
-                program_list.append(subprocess.Popen([data_launch.get_program_path()] + pars_list,
-                                                     stdout=subprocess.PIPE,
-                                                     text=True))
+                program_list.append([subprocess.Popen([data_launch.get_program_path()] + pars_list,
+                                                      stdout=subprocess.PIPE,
+                                                      text=True),
+                                     [data_launch.get_program_path()] + pars_list])
             for one_subproc in program_list:
-                one_subproc.wait()
-                some = GFunction.pars_out(one_subproc.stdout.read(), data_launch.get_searching_word())
+                one_subproc[0].wait()
+                some = GFunction.pars_out(one_subproc[0].stdout.read(), data_launch.get_searching_word())
+
+                print("for ", one_subproc[1], ":", some)
                 if some is not None:
                     res.append([pars, float(some)])
         data_launch.update_data_out(res)

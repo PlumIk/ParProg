@@ -24,7 +24,7 @@ def get_max_values(value: int, size: int) -> int:
 
 def to_file(file_name: str, data: DataDict):
     f = open(file_name, 'w')
-    print(file_name)
+    'print(file_name)'
     some_dict = data.get_dict()
     for item in some_dict.items():
         some_line = "For dataset \'" + str(item[0]) + "\' mid value " + str(data.get_mid_value(item[0])) + \
@@ -32,7 +32,7 @@ def to_file(file_name: str, data: DataDict):
         for one in item[1]:
             some_line += '\n\t' + str(one)
         some_line += '\n'
-        print(some_line)
+        ''' print(some_line)'''
         f.write(some_line)
 
 

@@ -2,7 +2,7 @@
 INT = 1
 STR = 2
 # FLOAT = 3
-# DOUBLE = 4
+DOUBLE = 3
 
 # type of condition
 RANGE = 1
